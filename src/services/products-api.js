@@ -18,10 +18,18 @@ export const productsApiSlice = createApi({
       getCategories: builder.query({
         query: () => "categories",
       }),
+      postCategories: builder.mutation({
+        query: (data) => ({
+          url: `categories`,
+          method: "POST",
+          body: data,
+        }),
+      }),
     };
   },
 });
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetCategoriesQuery } = productsApiSlice;
+export const { useGetCategoriesQuery, usePostCategoriesMutation } =
+  productsApiSlice;

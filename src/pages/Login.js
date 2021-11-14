@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import axios from "axios";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
@@ -11,7 +11,6 @@ export default function Login() {
     const emailValue = e.target.value;
     let newState = { ...user };
     newState.email = emailValue;
-
     setUser(newState);
   };
 
@@ -23,10 +22,23 @@ export default function Login() {
     setUser(newState);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    axios
+      .post("https://serene-eyrie-59879.herokuapp.com/login", {
+        email: "johndoe@example.com",
+        password: "secretword",
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
+  };
+
   return (
     <>
       <Container>
-        <Form className="mt-5">
+        <Form className="mt-5" onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
             <Form.Control
