@@ -4,13 +4,15 @@ import {
   usePostCategoriesMutation,
 } from "../services/products-api";
 export default function Categories() {
-  const { data = [], isFetching, endpointName } = useGetCategoriesQuery();
+  const { data = [], error, isLoading } = useGetCategoriesQuery();
 
   const { postCategories, isPending } = usePostCategoriesMutation();
 
+  if (isLoading) return <div>Loading...</div>;
+  if (!data) return <div>Missing post!</div>;
+
   return (
     <div>
-      Categories Page, End point name: {endpointName}
       <div>Number of categories fetched: {data.length}</div>
       {data.map((category) => {
         return (
