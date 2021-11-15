@@ -1,14 +1,8 @@
-import axios from "axios";
 import React from "react";
-import {
-  useGetCategoriesQuery,
-  usePostCategoriesMutation,
-} from "../services/products-api";
+
+import { useGetCategoriesQuery } from "../services/products-api";
 export default function Categories() {
   const { data = [], isLoading, error } = useGetCategoriesQuery();
-
-  
-  const { postCategories, isPending } = usePostCategoriesMutation();
 
   if (isLoading) return <div>Loading...</div>;
   if (!data) return <div>Missing post!</div>;

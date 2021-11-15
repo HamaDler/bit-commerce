@@ -13,8 +13,30 @@ export const productsApiSlice = createApi({
     } */
   }),
   // try to define the expected endpoints upfront as part of the structure
+
+  /* you only use queries for requests that retrieve data.
+   For anything that alters data on the server or will possibly
+    invalidate the cache, you should use a Mutation.*/
   endpoints: (builder) => {
     return {
+      loginUser: builder.mutation({
+        // POST request to /login
+        query: (
+          data = { name: "johndoe@example.com", password: "secretword" }
+        ) => ({
+          url: `login`,
+          method: "POST",
+          body: data,
+        }),
+      }),
+      registerUser: builder.mutation({
+        // POST request to /login
+        query: (data) => ({
+          url: `register`,
+          method: "POST",
+          body: data,
+        }),
+      }),
       getCategories: builder.query({
         query: () => "/categories",
       }),
@@ -29,6 +51,13 @@ export const productsApiSlice = createApi({
           body: data,
         }),
       }),
+      postProducts: builder.mutation({
+        query: (data) => ({
+          url: `products`,
+          method: "POST",
+          body: data,
+        }),
+      }),
     };
   },
 });
@@ -36,7 +65,9 @@ export const productsApiSlice = createApi({
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
 export const {
-  useGetCategoriesQuery,
+  useLoginUserMutation,
+  useRegisterUserMutation,
   usePostCategoriesMutation,
+  useGetCategoriesQuery,
   useGetProductsQuery,
 } = productsApiSlice;

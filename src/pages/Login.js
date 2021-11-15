@@ -1,11 +1,26 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { useLoginUserMutation } from "../services/products-api";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 export default function Login() {
   // our local user state
   const [user, setUser] = useState({});
+
+  const localToken = localStorage.getItem("token");
+  useEffect(() => {
+    console.log(localStorage.getItem("token"));
+  }, [localToken]);
+
+  const [
+    loginUser, // This is the mutation trigger function, u can pass form data here
+    { data, error, isLoading },
+  ] = useLoginUserMutation();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    loginUser(user);
+  };
 
   const handleEmail = (e) => {
     const emailValue = e.target.value;
@@ -22,19 +37,17 @@ export default function Login() {
     setUser(newState);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  if (isLoading) {
+    return <p> Loading</p>;
+  }
+  if (error) {
+    return <p> we have an error</p>;
+  }
 
-    axios
-      .post("https://serene-eyrie-59879.herokuapp.com/login", {
-        email: "johndoe@example.com",
-        password: "secretword",
-      })
-      .then((res) => {
-        console.log(res.data);
-      });
-  };
-
+  if (data) {
+    console.log("the data from redux", data);
+    localStorage.setItem("token", data.token);
+  }
   return (
     <>
       <Container>
