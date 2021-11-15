@@ -13,11 +13,15 @@ export const productsApiSlice = createApi({
     } */
   }),
   // try to define the expected endpoints upfront as part of the structure
-  endpoints(builder) {
+  endpoints: (builder) => {
     return {
       getCategories: builder.query({
-        query: () => "categories",
+        query: () => "/categories",
       }),
+      getProducts: builder.query({
+        query: () => "/products",
+      }),
+
       postCategories: builder.mutation({
         query: (data) => ({
           url: `categories`,
@@ -31,5 +35,8 @@ export const productsApiSlice = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetCategoriesQuery, usePostCategoriesMutation } =
-  productsApiSlice;
+export const {
+  useGetCategoriesQuery,
+  usePostCategoriesMutation,
+  useGetProductsQuery,
+} = productsApiSlice;
