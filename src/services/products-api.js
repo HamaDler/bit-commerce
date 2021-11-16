@@ -1,29 +1,25 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const productsApiSlice = createApi({
-  // when we attach this to our redux store, where are we keeping the data in the reducers
   reducerPath: "api",
 
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://serene-eyrie-59879.herokuapp.com/",
-    // if the endpoint requires auth, you need to add header with your API key
-    /* prepareHeaders(headers){ 
-      headers.set('x-api-key', your-api-key)  
+    baseUrl: "https://example-api-59879.herokuapp.com/",
+    prepareHeaders: (headers, { getState }) => {
+      // const token = getState().auth.token;
+      const token = localStorage.getItem("token");
+      if (token) {
+        headers.set("authorization", `${token}`);
+      }
       return headers;
-    } */
+    },
   }),
-  // try to define the expected endpoints upfront as part of the structure
 
-  /* you only use queries for requests that retrieve data.
-   For anything that alters data on the server or will possibly
-    invalidate the cache, you should use a Mutation.*/
   endpoints: (builder) => {
     return {
       loginUser: builder.mutation({
         // POST request to /login
-        query: (
-          data = { name: "johndoe@example.com", password: "secretword" }
-        ) => ({
+        query: (data) => ({
           url: `login`,
           method: "POST",
           body: data,
@@ -42,6 +38,9 @@ export const productsApiSlice = createApi({
       }),
       getProducts: builder.query({
         query: () => "/products",
+      }),
+      getUsers: builder.query({
+        query: () => "/users",
       }),
 
       postCategories: builder.mutation({
@@ -70,4 +69,5 @@ export const {
   usePostCategoriesMutation,
   useGetCategoriesQuery,
   useGetProductsQuery,
+  useGetUsersQuery,
 } = productsApiSlice;
