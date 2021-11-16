@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useLoginUserMutation } from "../services/products-api";
+import { login } from "../features/auth/authSlice";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
@@ -7,6 +9,7 @@ export default function Login() {
   // our local user state
   const [user, setUser] = useState({});
 
+  const dispatch = useDispatch();
   const localToken = localStorage.getItem("token");
   useEffect(() => {
     console.log(localStorage.getItem("token"));
@@ -47,6 +50,7 @@ export default function Login() {
   if (data) {
     console.log("the data from redux", data);
     localStorage.setItem("token", data.token);
+    dispatch(login({ token: data.token }));
   }
   return (
     <>

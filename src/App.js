@@ -12,20 +12,14 @@ import Register from "./pages/Register";
 import { setCridentials } from "./features/auth/authSlice";
 
 import "./App.css";
+import CheckToken from "./components/CheckToken";
 
 function App() {
-  // Terrible solution, will fix later
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    dispatch(setCridentials(token));
-  }, []);
-
   return (
     <div className="App">
       <TheNavbar />
-
+      {/* CHECK TOEKN EXPIRATION ON EVERY ROUTE CHANGE */}
+      <CheckToken />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/categories" element={<Categories />} />

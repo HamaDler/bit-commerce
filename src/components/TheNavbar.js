@@ -4,8 +4,10 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link } from "react-router-dom";
-
+import { logout } from "../features/auth/authSlice";
+import { useDispatch } from "react-redux";
 export default function TheNavbar() {
+  const dispatch = useDispatch();
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
@@ -50,6 +52,13 @@ export default function TheNavbar() {
             <Nav.Link as={Link} to="/register">
               Register
             </Nav.Link>
+            <button
+              onClick={() => {
+                dispatch(logout());
+              }}
+            >
+              logout
+            </button>
           </Nav>
         </Navbar.Collapse>
       </Container>

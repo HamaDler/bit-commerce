@@ -9,8 +9,15 @@ const authSlice = createSlice({
     setCridentials: (state, action) => {
       state.token = action.payload;
     },
+    login: (state, action) => {
+      state.token = action.payload.token;
+    },
+    logout: (state) => {
+      localStorage.setItem("token", "");
+      state.token = "";
+    },
   },
 });
 
-export const { setCridentials } = authSlice.actions;
+export const { setCridentials, logout, login } = authSlice.actions;
 export default authSlice.reducer;

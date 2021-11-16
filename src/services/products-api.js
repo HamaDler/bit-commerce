@@ -4,10 +4,10 @@ export const productsApiSlice = createApi({
   reducerPath: "api",
 
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://example-api-59879.herokuapp.com/",
+    baseUrl: "https://serene-eyrie-59879.herokuapp.com/",
     prepareHeaders: (headers, { getState }) => {
-      // const token = getState().auth.token;
-      const token = localStorage.getItem("token");
+      const token = getState().auth.token;
+      // const token = localStorage.getItem("token");
       if (token) {
         headers.set("authorization", `${token}`);
       }
